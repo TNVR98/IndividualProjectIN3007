@@ -1,4 +1,4 @@
-package com.example.tractivity
+package com.tanvir.tractivity
 
 import org.junit.Test
 

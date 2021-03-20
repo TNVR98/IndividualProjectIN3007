@@ -31,56 +31,56 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="113dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="100dp"
             android:text="Welcome Back"
             android:textColor="#363A43"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginStart="10dp" />
 
         <EditText
-            android:id="@+id/et_email"
+            android:id="@+id/et_email_login"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@drawable/edit_text_background"
             android:drawablePadding="10dp"
-            android:drawableEnd="@drawable/ic_user"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="21sp"
-            android:drawableLeft="@drawable/ic_user"
-            android:drawableRight="@drawable/ic_user" />
+            android:textSize="15sp"
+            android:drawableRight="@drawable/ic_email" />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_password_login"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@drawable/edit_text_background"
             android:drawablePadding="10dp"
-            android:drawableEnd="@drawable/ic_password"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="21sp"
+            android:textSize="15sp"
             android:drawableRight="@drawable/ic_password" />
 
         <TextView
+            android:id="@+id/tv_forgot_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:gravity="right"
-            android:text="Forgot password ?"
+            android:text="@string/forgot_pass"
             android:textColor="@color/white" />
 
         <android.widget.Button
@@ -97,9 +97,10 @@
             />
 
         <TextView
+            android:id="@+id/tv_signUP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Don't Have an account? Sign Up"
+            android:text="@string/sign_up"
             android:textColor="@color/white"
             android:gravity="center"
             android:layout_marginTop="20dp">

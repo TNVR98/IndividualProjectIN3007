@@ -1,4 +1,4 @@
-package com.example.tractivity
+package com.tanvir.tractivity
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

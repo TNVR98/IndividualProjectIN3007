@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "900655394617",
+    "project_id": "tractivity-82775",
+    "storage_bucket": "tractivity-82775.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900655394617:android:62343d63e8a621b80a02e8",
+        "android_client_info": {
+          "package_name": "com.tanvir.tractivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900655394617-s1upue9224q2sgegip833uh8djpa2ako.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5eBAC8Zmw_qspSZstY_-nBgxIbz2G5vI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900655394617-s1upue9224q2sgegip833uh8djpa2ako.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
