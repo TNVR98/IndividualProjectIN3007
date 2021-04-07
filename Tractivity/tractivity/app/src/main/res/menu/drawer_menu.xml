@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/main_pg"
+        android:title="Tractivity"
+        android:icon="@drawable/ic_stopwatch"/>
+
+    <item
+        android:id="@+id/activities"
+        android:title="Activities"
+        android:icon="@drawable/ic_activities"
+        />
+    <item
+        android:id="@+id/charts"
+        android:title="Charts"
+        android:icon="@drawable/ic_charts"
+        />
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"
+        />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/ic_logout"
+        />
+</menu>
