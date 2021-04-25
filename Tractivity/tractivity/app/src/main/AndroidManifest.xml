@@ -10,27 +10,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tractivity">
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".activities.ChartsActivity"
             android:theme="@style/NoActionBarTheme"
             />
-        <activity android:name=".BaseActivity"
-            />
         <activity
-            android:name=".TaskActivity"
+            android:name=".activities.DetailsActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".TractivityMain"
+            android:name=".activities.AddActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activities.UserProfileActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity android:name=".activities.BaseActivity" />
+        <activity
+            android:name=".activities.ActivitiesActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".activities.TractivityMain"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".activities.SignUpActivity"
             android:theme="@style/NoActionBarTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@style/NoActionBarTheme"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name=".IntroActivity"
+            android:name=".activities.IntroActivity"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

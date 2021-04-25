@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.AddActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_addActivity"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#6C4FF1"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_activityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Activity name"
+            android:inputType="text"
+            android:textSize="20sp"
+            />
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="description"
+            android:inputType="text"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/et_dueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="due date"
+            android:inputType="date"
+            android:textSize="20sp"
+            />
+
+    </LinearLayout>
+
+    <android.widget.Button
+        android:id="@+id/bt_add"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/my_button"
+        android:padding="15dp"
+        android:gravity="center"
+        android:text="add"
+        android:textColor="@color/white"
+        />
+
+
+
+
+</LinearLayout>

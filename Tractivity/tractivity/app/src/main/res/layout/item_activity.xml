@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_activityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="activity name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_startedOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_activityName"
+            android:text="started on:" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_activityName"
+            android:layout_toEndOf="@id/tv_startedOn"
+            android:layout_toRightOf="@id/tv_startedOn"
+            android:paddingStart="3dp"
+            android:paddingLeft="3dp"
+            tools:text="dd/mm/yyyy" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
