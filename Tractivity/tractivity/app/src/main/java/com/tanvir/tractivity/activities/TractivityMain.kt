@@ -68,11 +68,6 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         navigation.setNavigationItemSelectedListener(this)
 
 
-//        notificationIntent.setAction(Intent.ACTION_MAIN);
-//        notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
         val notificationIntent = Intent(this, TractivityMain::class.java)
         notificationIntent.setAction(Intent.ACTION_MAIN)
         val pendingIntent : PendingIntent = PendingIntent.getActivity(this,0,notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT)
@@ -90,52 +85,105 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
             .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
 
 
-
-        button.setOnClickListener {
-           val intentP = Intent(this, ActivitiesActivity::class.java)
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
-            startActivity(intentP)
-            }
-
-
-
         // start and pause the activity
         btn_start.setOnClickListener {
             isActivityStarted = true
             NotificationManagerCompat.from(this).notify(NOTIFICATION_ID,buildNotification)
             startAndPauseActivity()
-
-
         }
-        //STOP AND RESET STOPWATCH
+        //STOP STOPWATCH and call Save Activity Dialog
         btn_stop.setOnClickListener{
             if( isActivityStarted){
                 NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID)
                 progress = c_chronometer.text.toString()
-                c_chronometer.stop()
+                pauseStopWatch()
                 saveDialogFunction()
-                resetStopwatch()
+
             }else{
-                Toast.makeText(this, "Activity is not started", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Activity not started", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        // Reset stopwatch and confirmation dialog
+        btn_reset.setOnClickListener {
+            if(isActivityStarted){
+                pauseStopWatch()
+                confirmationDialog()
             }
 
         }
 
-
         populateNavUsername()
-
 
     }
 
-    //pupulate username on navigation
+
+    // start and pause the activity function
+    private fun startAndPauseActivity(){
+        if (!running) {
+            startStopWatch()
+        } else {
+            pauseStopWatch()
+
+        }
+
+    }
+
+    // START THE STOPWATCH
+    private fun startStopWatch(){
+        iArrow.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotating_arrow))
+        c_chronometer.base = SystemClock.elapsedRealtime() + pauseTime
+        c_chronometer.start()
+        running = true
+        btn_start.text = "Pause"
+    }
+
+    // PAUSE THE STOPWATCH
+    private fun pauseStopWatch(){
+        iArrow.clearAnimation()
+        pauseTime = c_chronometer.base - SystemClock.elapsedRealtime()
+        c_chronometer.stop()
+        running = false
+        btn_start.text= "Resume"
+    }
+
+
+
+    //reset the stopwatch
+    private fun resetStopwatch(){
+
+        c_chronometer.base= SystemClock.elapsedRealtime()
+        iArrow.clearAnimation()
+        pauseTime = 0
+        running=false
+        btn_start.text="Start"
+    }
+
+    private fun confirmationDialog(){
+        val confBuilder = AlertDialog.Builder(this)
+        confBuilder.setTitle("Reset stopwatch?")
+        confBuilder.setMessage("resetting the stopwatch will cancel the progress")
+        confBuilder.setPositiveButton("RESET") { dialog: DialogInterface, i: Int ->
+            resetStopwatch()
+            isActivityStarted=false
+            dialog.cancel()
+        }
+        confBuilder.setNegativeButton("Cancel") { dialog: DialogInterface, i: Int ->
+            dialog.cancel()
+        }
+        confBuilder.show()
+    }
+
+
+    //populate username on navigation
     fun populateNavUsername(){
         FirebaseFirestore.getInstance().collection(Constants.USERS)
                 .document(FireStoreClass().getCurrentUserID()).get()
                 .addOnSuccessListener {documentSnapshot ->
                     val user = documentSnapshot.toObject<UserClass>()!!
-                    val nav_header = navigation.getHeaderView(0)
-                    val nav_username = nav_header.findViewById<TextView>(R.id.tv_username)
-                    nav_username.text = user.name
+                    val navHeader = navigation.getHeaderView(0)
+                    val navUsername = navHeader.findViewById<TextView>(R.id.tv_username)
+                    navUsername.text = user.name
 
                 }
     }
@@ -163,6 +211,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         }
     }
 
+    // Intend to the selected activity screen from the navigation menu
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.main_pg -> {
@@ -194,39 +243,6 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
 
-    // start and pause the activity function
-   private fun startAndPauseActivity(){
-        if (!running) {
-            iArrow.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotating_arrow))
-            c_chronometer.base = SystemClock.elapsedRealtime() + pauseTime
-            c_chronometer.start()
-            running = true
-            btn_start.text = "Pause"
-            // btn_start.setBackground(R.drawable.pause_button)
-        } else {
-            iArrow.clearAnimation()
-            pauseTime = c_chronometer.base - SystemClock.elapsedRealtime()
-            c_chronometer.stop()
-            running = false
-            btn_start.text= "Resume"
-            //btn_start.setBackground(R.drawable.button_start)
-
-        }
-
-    }
-
-
-
-    //reset the stopwatch
-    private fun resetStopwatch(){
-
-        c_chronometer.base= SystemClock.elapsedRealtime()
-        iArrow.clearAnimation()
-        pauseTime = 0
-        running=false
-        btn_start.text="Start"
-    }
-
     //creating a notification channel
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -254,8 +270,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         val saveActivityDialog = saveDialogbuilder.show()
         saveActivityDialog.setCancelable(false) // prevent user to close the dialog by clicking outside the dialog
         saveDialogView.bt_selectActivity.setOnClickListener {
-           //SELECT ACTIVITY DIALOG
-            //val listItems = arrayOf("item 1","item2", "item3")
+           // ACTIVITY DIALOG populated with the activity lists from the DB
             firestore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
                     .collection(Constants.ACTIVITIES)
                     .get()
@@ -307,12 +322,15 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
                     FireStoreClass().saveRecordOnDB(record,activity.name)
                 }
                 isActivitySelected = false
+                isActivitySelected = false
+                resetStopwatch()
                 saveActivityDialog.dismiss()
             }
 
         }
         saveDialogView.bt_cancel.setOnClickListener{
-            Toast.makeText(applicationContext, "Please save the Activity", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "Activity not saved", Toast.LENGTH_SHORT).show()
+            saveActivityDialog.dismiss()
         }
 
 

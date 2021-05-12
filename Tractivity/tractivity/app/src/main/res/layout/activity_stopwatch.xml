@@ -31,8 +31,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="116dp"
         android:layout_marginEnd="8dp"
-        android:foregroundGravity="center"
         android:layout_marginRight="8dp"
+        android:foregroundGravity="center"
         android:src="@drawable/arrow_red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.465"
@@ -64,8 +64,8 @@
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="240dp"
-        android:text="Stop"
         android:background="@drawable/button_stopwatch"
+        android:text="Stop"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,30 +96,19 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/tv_progress"
-        android:layout_width="95dp"
-        android:layout_height="21dp"
-        tools:text="TextView"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_chronometer"
-        app:layout_constraintVertical_bias="0.327"
-        tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
         android:background="@drawable/button_stopwatch"
+        android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_progress"
-        app:layout_constraintVertical_bias="0.381" />
+        app:layout_constraintTop_toBottomOf="@+id/c_chronometer"
+        app:layout_constraintVertical_bias="0.326" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

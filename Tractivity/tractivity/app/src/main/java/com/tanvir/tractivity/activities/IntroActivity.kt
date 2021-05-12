@@ -23,7 +23,7 @@ class IntroActivity : AppCompatActivity() {
         var currentUserID = FireStoreClass().getCurrentUserID()
 
         //STAY LOGGED IN
-        //intent to TractivityMain activity if the user is logged in
+        //intent to TractivityMain activity as soon as the user enter the app if the user is logged in already
         if(currentUserID.isNotEmpty()){
             startActivity(Intent(this, TractivityMain::class.java))
             finish()
@@ -33,7 +33,6 @@ class IntroActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-
         }
 
         bt_signUp.setOnClickListener{
@@ -41,8 +40,6 @@ class IntroActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-
 
     }
 }

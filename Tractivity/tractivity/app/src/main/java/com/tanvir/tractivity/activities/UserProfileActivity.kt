@@ -54,7 +54,7 @@ class UserProfileActivity : BaseActivity(){
                     tv_username_profile.text = loggedUser.name
                     tv_profile_name.text=loggedUser.name
                     tv_profile_email.text = loggedUser.email
-                    tv_score.text = loggedUser.score.toString()
+                    tv_score.text = ""
 
                 }
 

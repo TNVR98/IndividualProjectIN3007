@@ -56,7 +56,7 @@ class LoginActivity : BaseActivity() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("Login", "LogInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.makeText(baseContext, "Authentication failed, incorrect email or password was typed",
                             Toast.LENGTH_SHORT).show()
 
                     }
