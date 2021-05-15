@@ -20,7 +20,7 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
 
         auth = Firebase.auth
 
@@ -33,6 +33,9 @@ class LoginActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
+         tv_forgot_pass.setOnClickListener{
+             startActivity(Intent(this, PasswordResetActivity::class.java))
+         }
 
     }
 
@@ -54,11 +57,10 @@ class LoginActivity : BaseActivity() {
 
 
                     } else {
-                        // If sign in fails, display a message to the user.
+                        // If sign in fails, display a error message to the user.
                         Log.w("Login", "LogInWithEmail:failure", task.exception)
                         Toast.makeText(baseContext, "Authentication failed, incorrect email or password was typed",
                             Toast.LENGTH_SHORT).show()
-
                     }
                 }
         }
@@ -79,9 +81,7 @@ class LoginActivity : BaseActivity() {
             }
             else ->{
                 return true
-
             }
-
         }
     }
 }

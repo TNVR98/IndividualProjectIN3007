@@ -33,6 +33,7 @@ class FireStoreClass {
         return currentUserID
     }
 
+    // this function takes a Activity object class and store it in the Firetore as a document in the Activity collection
     fun saveActivityOnDB(activity: ActivityClass) {
         fireStore.collection(Constants.USERS)
                 .document(getCurrentUserID())
@@ -56,7 +57,5 @@ class FireStoreClass {
                 .addOnFailureListener{ e ->
                     Log.e("DDDBB", "record not saved")
                 }
-
-
     }
 }

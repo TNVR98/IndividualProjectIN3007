@@ -36,7 +36,7 @@ class SignUpActivity : BaseActivity() {
             }
     }
 
-    // user is created and stored on firestore
+    // user is created and stored on authentication server and firestore
     private fun createUser(){
         val name: String = et_name.text.toString().trim{ it <= ' '}
         val email: String = et_email.text.toString().trim{ it <= ' '}
@@ -48,11 +48,8 @@ class SignUpActivity : BaseActivity() {
                 .addOnCompleteListener(this){
                 task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-//                    val userEmail = user.email!!
                     val user = UserClass(Firebase.auth.currentUser!!.uid,name,email)
-//                    val firebaseUser: FirebaseUser = task.result!!.user!!
-//                    val user = User(firebaseUser.uid,name,email)
+
                     FireStoreClass().registerUserOnDB(user)
                     Toast.makeText(this,
                         "Welcome $name to Tractivity",Toast.LENGTH_SHORT).show()
@@ -66,7 +63,6 @@ class SignUpActivity : BaseActivity() {
                 }
             }
         }
-
     }
 
     //function to validate the sighUp form
@@ -96,13 +92,12 @@ class SignUpActivity : BaseActivity() {
                 return true
 
             }
-
         }
     }
 
     //checks if both the passwords matches
     private fun isPasswordMatched (password:String, reTypedPassword:String) :Boolean{
-        return if(password.equals(reTypedPassword,false)){
+        return if(password == reTypedPassword){
             true
         }else{
             showError("Password does not match, please retype")

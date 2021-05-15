@@ -73,7 +73,6 @@ class ActivitiesActivity : AppCompatActivity() {
                     val activity: ActivityClass? = result.toObject(ActivityClass::class.java)
                     if (activity != null) {
                         activityList.add(activity)
-
                     }
                 }
                 populateActivityListRv(activityList)

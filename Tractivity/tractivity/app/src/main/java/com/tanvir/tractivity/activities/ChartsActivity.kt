@@ -16,6 +16,7 @@ import com.tanvir.tractivity.model.ActivityClass
 import com.tanvir.tractivity.model.ActivityRecordClass
 import com.tanvir.tractivity.model.FireStoreClass
 import kotlinx.android.synthetic.main.activity_charts.*
+import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class ChartsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,7 @@ class ChartsActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-
+        setupActionBar()
         showChart()
         showBarChart()
     }
@@ -60,8 +61,6 @@ class ChartsActivity : AppCompatActivity() {
 
                                 activityBarEntries.add(BarEntry(index++,totalProgress.toFloat()))
                                 activityBarLabel.add(activity.name)
-
-
                             }
                             displayBarChart(activityBarEntries,activityBarLabel)
                         }.addOnFailureListener { exception ->
@@ -69,9 +68,6 @@ class ChartsActivity : AppCompatActivity() {
                         }
 
                 }
-
-
-
 
             }.addOnFailureListener { exception ->
                 Log.d("DB", "Error getting activities: ", exception)
@@ -94,12 +90,10 @@ class ChartsActivity : AppCompatActivity() {
                     FireStoreClass().fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
                         .collection(Constants.ACTIVITIES).document(activity.name).collection(Constants.RECORDS)
                         .get().addOnSuccessListener { results ->
-
                             for (result in results){
 
                                 val record : ActivityRecordClass = result.toObject(ActivityRecordClass::class.java)
                                 totalProgress += record.progress
-
                             }
 
                             if (totalProgress > 0){
@@ -112,9 +106,6 @@ class ChartsActivity : AppCompatActivity() {
                         }
 
                 }
-
-
-
 
             }.addOnFailureListener { exception ->
                 Log.d("DB", "Error getting activities: ", exception)
@@ -177,6 +168,17 @@ class ChartsActivity : AppCompatActivity() {
         crt_pieChart.invalidate()
 
     }
+    //CUSTOM ACTION BAR
+    private fun setupActionBar() {
+        setSupportActionBar(toolbar_charts)
+        val actionBar = supportActionBar
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back)
+        actionBar.title = "Charts"
+
+        toolbar_charts.setNavigationOnClickListener{
+            onBackPressed() }
+    }
 
     private class ProgressValueFormatter : ValueFormatter(){
         override fun getFormattedValue(value:Float):String {
@@ -199,7 +201,6 @@ class ChartsActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }
 

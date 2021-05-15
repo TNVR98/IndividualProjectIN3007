@@ -1,10 +1,15 @@
 package com.tanvir.tractivity.activities
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -17,6 +22,7 @@ import com.tanvir.tractivity.model.FireStoreClass
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.app_bar2.iv_back
 import kotlinx.android.synthetic.main.app_bar3.*
+import kotlinx.android.synthetic.main.dialog_edit_activity.view.*
 
 @Suppress("DEPRECATION")
 class DetailsActivity : AppCompatActivity() {
@@ -37,12 +43,16 @@ class DetailsActivity : AppCompatActivity() {
 
         displayActivityDetailsFromDB()
         displayRecordListFromDB()
+        displayProgress()
 
         iv_back.setOnClickListener{
             onBackPressed()
         }
         iv_delete.setOnClickListener{
-
+            confirmationDialog()
+        }
+        iv_edit.setOnClickListener{
+            displayActivityEditDialog()
         }
 
     }
@@ -66,7 +76,7 @@ class DetailsActivity : AppCompatActivity() {
 
     }
 
-    fun populateRecordsRv (recordList: ArrayList<ActivityRecordClass>) {
+    private fun populateRecordsRv (recordList: ArrayList<ActivityRecordClass>) {
         if (recordList.size> 0){
             rv_recordList.layoutManager = LinearLayoutManager(this)
             rv_recordList.setHasFixedSize(true)
@@ -78,7 +88,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
 
-    fun displayActivityDetailsFromDB (){
+    private fun displayActivityDetailsFromDB (){
         fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
             .collection(Constants.ACTIVITIES).document(activityName).get()
             .addOnSuccessListener{ document ->
@@ -98,6 +108,107 @@ class DetailsActivity : AppCompatActivity() {
         tv_startedDate.text= "Started Date: ${activity.date}"
         tv_dueDate.text= "Due date: ${activity.dueDate}"
 
+    }
+
+    private fun deleteActivity(){
+        fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
+            .collection(Constants.ACTIVITIES).document(activityName).delete()
+            .addOnSuccessListener {
+                Log.d("DATA", "Activity has been deleted")
+                Toast.makeText(this,
+                    "Activity has been deleted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e -> Log.w("DATA", "Error deleting document", e) }
+    }
+
+    private fun confirmationDialog(){
+        val confBuilder = AlertDialog.Builder(this)
+        confBuilder.setTitle("Delete Activity?")
+        confBuilder.setPositiveButton("YES") { dialog: DialogInterface, i: Int ->
+            deleteActivity()
+            val intent = Intent(this, ActivitiesActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+            dialog.cancel()
+        }
+        confBuilder.setNegativeButton("NO") { dialog: DialogInterface, i: Int ->
+            dialog.cancel()
+        }
+        confBuilder.show()
+    }
+
+    private fun displayActivityEditDialog(){
+        val editDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_edit_activity,null)
+        fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
+            .collection(Constants.ACTIVITIES).document(activityName).get()
+            .addOnSuccessListener{ document ->
+                Log.d("DB", "document received")
+                val activity : ActivityClass? = document.toObject(ActivityClass::class.java)
+                if (activity != null) {
+                    editDialogView.et_description.setText(activity.description)
+                    editDialogView.et_dueDate.setText(activity.dueDate)
+                    val editDialogBuilder =AlertDialog.Builder(this).setView(editDialogView)
+                    val editDialog = editDialogBuilder.show()
+                    editDialogView.bt_submit.setOnClickListener {
+                        val description = editDialogView.et_description.text.toString()
+                        val dueDate = editDialogView.et_dueDate.text.toString()
+                        fireStore.collection(Constants.USERS)
+                            .document(FireStoreClass().getCurrentUserID())
+                            .collection(Constants.ACTIVITIES).document(activityName).update(
+                                mapOf(
+                                    "description" to description,
+                                    "dueDate" to dueDate
+                                )
+                            )
+                        val intent = Intent(this, ActivitiesActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
+                        Toast.makeText(this, "Activity details changed", Toast.LENGTH_SHORT).show()
+                        editDialog.dismiss()
+                    }
+                    editDialogView.bt_cancel.setOnClickListener {
+                        editDialog.cancel()
+                    }
+                }
+            }.addOnFailureListener { exception ->
+                Log.d("DB", "Error getting the document: ", exception)
+            }
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun displayProgress(){
+        fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
+            .collection(Constants.ACTIVITIES).document(activityName).collection(Constants.RECORDS).get()
+            .addOnSuccessListener{ documents ->
+                Log.d("DB", "collection received")
+                var totalTime = 0L
+                for (document in documents){
+                    val record : ActivityRecordClass = document.toObject(ActivityRecordClass::class.java)
+                    totalTime += record.progress
+                }
+                tv_progress.text= "Total time spent: ${formatProgress(totalTime)}"
+            }.addOnFailureListener { exception ->
+                Log.d("DB", "Error getting the document: ", exception)
+            }
+    }
+
+    private fun formatProgress(progressInSec : Long) : String{
+        val hours = progressInSec / 3600
+        val minutes = (progressInSec % 3600) / 60
+        val seconds = progressInSec % 60
+        return when {
+            hours >0 -> {
+                String.format("%02dh %02dm %02ds", hours, minutes, seconds)
+            }
+            minutes>0 -> {
+                String.format("%02dm %02ds",minutes, seconds)
+            }
+            else -> {
+                String.format("%02ds", seconds)
+            }
+        }
     }
 
 }

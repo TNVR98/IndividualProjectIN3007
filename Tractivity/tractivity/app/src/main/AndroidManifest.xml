@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tractivity">
         <activity
-            android:name=".activities.ChartsActivity"
+            android:name=".activities.PasswordResetActivity"
             android:theme="@style/NoActionBarTheme"
             />
+        <activity
+            android:name=".activities.ChartsActivity"
+            android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".activities.DetailsActivity"
             android:theme="@style/NoActionBarTheme" />

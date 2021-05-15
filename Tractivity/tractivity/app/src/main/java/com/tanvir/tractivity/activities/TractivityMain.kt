@@ -34,6 +34,10 @@ import kotlinx.android.synthetic.main.activity_trmain.*
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.dialog_save.view.*
 
+/**
+ * this class contains the  of the functionality the home screen, Tractivity
+ * The stop watch, app navigation and storing the activity data in the database was implemented here.
+ */
 @Suppress("DEPRECATION")
 class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -193,7 +197,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
 
-    //ACTION BAR
+    //CUSTOM ACTION BAR
     private fun setupActionBar() {
         setSupportActionBar(toolbar_trmain)
         toolbar_trmain.setNavigationIcon(R.drawable.ic_menu)
@@ -270,7 +274,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         val saveActivityDialog = saveDialogbuilder.show()
         saveActivityDialog.setCancelable(false) // prevent user to close the dialog by clicking outside the dialog
         saveDialogView.bt_selectActivity.setOnClickListener {
-           // ACTIVITY DIALOG populated with the activity lists from the DB
+           // ACTIVITY NAMES DIALOG populated with the activity lists retrieved from the DB
             firestore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
                     .collection(Constants.ACTIVITIES)
                     .get()
@@ -307,6 +311,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
                     }
 
         }
+        // storing the data on the firestore once the submit button in clicked
         saveDialogView.bt_submit.setOnClickListener{
             activityName = saveDialogView.et_activityName.text.toString()
             if (TextUtils.isEmpty(activityName)){

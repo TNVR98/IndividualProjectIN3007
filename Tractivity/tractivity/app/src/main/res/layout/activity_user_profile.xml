@@ -170,7 +170,7 @@
             android:layout_marginTop="20dp"
             android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:text="07123145678"
+            tools:text="07123145678"
             />
 
 
@@ -202,13 +202,14 @@
             android:layout_marginTop="20dp"
             android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:text="address"
+            tools:text="address"
             />
 
 
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_change_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
