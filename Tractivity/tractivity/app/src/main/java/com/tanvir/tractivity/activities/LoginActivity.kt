@@ -13,6 +13,10 @@ import com.tanvir.tractivity.R
 import kotlinx.android.synthetic.main.activity_login.*
 
 @Suppress("DEPRECATION")
+/**
+ *Login Screen of the application
+ * GUI designed in activity_login.xml
+ */
 class LoginActivity : BaseActivity() {
     private lateinit var auth: FirebaseAuth
 

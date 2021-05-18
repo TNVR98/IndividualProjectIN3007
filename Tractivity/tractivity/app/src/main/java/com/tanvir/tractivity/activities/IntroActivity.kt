@@ -9,6 +9,10 @@ import com.tanvir.tractivity.*
 import com.tanvir.tractivity.model.FireStoreClass
 import kotlinx.android.synthetic.main.activity_intro.*
 
+/**
+ * this is the implementation of the Intro screen
+ * the UI was implemented in activity_intro.xml file
+ */
 class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +33,14 @@ class IntroActivity : AppCompatActivity() {
             finish()
         }
 
+        //direct user to the Login Screen when login button is clicked
         bt_login.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        //direct user to the Sign-Up Screen when sign up button is clicked
         bt_signUp.setOnClickListener{
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)

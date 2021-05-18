@@ -25,6 +25,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.tanvir.tractivity.*
+import com.tanvir.tractivity.constants.Constants
 import com.tanvir.tractivity.model.ActivityClass
 import com.tanvir.tractivity.model.ActivityRecordClass
 import com.tanvir.tractivity.model.FireStoreClass
@@ -37,6 +38,7 @@ import kotlinx.android.synthetic.main.dialog_save.view.*
 /**
  * this class contains the  of the functionality the home screen, Tractivity
  * The stop watch, app navigation and storing the activity data in the database was implemented here.
+ * the ui was designed in the activity_trmain.xml, activity_stopwatch.xml, dialog_save.xml
  */
 @Suppress("DEPRECATION")
 class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -104,7 +106,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
                 saveDialogFunction()
 
             }else{
-                Toast.makeText(this, "Activity not started", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Activity not started", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -151,8 +153,6 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         btn_start.text= "Resume"
     }
 
-
-
     //reset the stopwatch
     private fun resetStopwatch(){
 
@@ -163,6 +163,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         btn_start.text="Start"
     }
 
+    //display a confirmation dialog
     private fun confirmationDialog(){
         val confBuilder = AlertDialog.Builder(this)
         confBuilder.setTitle("Reset stopwatch?")
@@ -215,7 +216,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         }
     }
 
-    // Intend to the selected activity screen from the navigation menu
+    // Intend to the selected activity screen from the navigation menu. Menus were defined in the menu/drawer_menu.xml file
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.main_pg -> {
@@ -263,7 +264,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
         }
     }
 
-    //SAVE ACTIVITY CUSTOM DIALOG
+    //SAVE ACTIVITY CUSTOM DIALOG inflated from dialog_save.xml file
     @SuppressLint("SetTextI18n")
     private fun saveDialogFunction() {
 
@@ -338,9 +339,7 @@ class TractivityMain : BaseActivity(), NavigationView.OnNavigationItemSelectedLi
             saveActivityDialog.dismiss()
         }
 
-
     }
-
 
     //PARSE STRING PROGRESS TO LONG (mm:ss or hh:mm:ss)
     fun parseProgress (progress:String) : Long{

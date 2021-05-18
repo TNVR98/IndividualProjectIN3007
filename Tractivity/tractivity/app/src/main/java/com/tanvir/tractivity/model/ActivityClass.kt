@@ -5,6 +5,9 @@ import android.os.Parcelable
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * A data class to hold the Activity details
+ */
 data class ActivityClass(
         val name: String = "",
         val date : String = SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date()),

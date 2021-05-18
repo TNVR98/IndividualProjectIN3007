@@ -14,6 +14,10 @@ import com.tanvir.tractivity.model.UserClass
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 @Suppress("DEPRECATION")
+/**
+ * The sign Screen of the application was implemented here
+ * with Gui designed in activity_sign_up.xml file
+ */
 class SignUpActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -58,8 +62,7 @@ class SignUpActivity : BaseActivity() {
 
                     finish()
                 }else {
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,task.exception!!.message.toString(),Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -100,10 +103,8 @@ class SignUpActivity : BaseActivity() {
         return if(password == reTypedPassword){
             true
         }else{
-            showError("Password does not match, please retype")
+            showError("Passwords do not match, please retype")
             false
         }
-
     }
-
 }

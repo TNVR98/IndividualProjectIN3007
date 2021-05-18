@@ -5,10 +5,13 @@ import android.os.Parcelable
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * A data class to hold the record details
+ */
+
 data class ActivityRecordClass (
         val progress : Long = 0,
         val date : String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-//        val time: Timestamp = Timestamp(System.currentTimeMillis())
         ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readLong(),

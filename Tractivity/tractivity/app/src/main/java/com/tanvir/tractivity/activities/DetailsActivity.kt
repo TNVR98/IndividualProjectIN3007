@@ -13,9 +13,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.tanvir.tractivity.Constants
 import com.tanvir.tractivity.R
-import com.tanvir.tractivity.RecordAdapter
+import com.tanvir.tractivity.constants.Constants
+import com.tanvir.tractivity.adapters.RecordAdapter
 import com.tanvir.tractivity.model.ActivityClass
 import com.tanvir.tractivity.model.ActivityRecordClass
 import com.tanvir.tractivity.model.FireStoreClass
@@ -25,6 +25,9 @@ import kotlinx.android.synthetic.main.app_bar3.*
 import kotlinx.android.synthetic.main.dialog_edit_activity.view.*
 
 @Suppress("DEPRECATION")
+/**
+ * the activity details screen was implented in this class with the GUI designed in activity_details.xml file
+ */
 class DetailsActivity : AppCompatActivity() {
     private val fireStore = Firebase.firestore
     private lateinit var activityName : String
@@ -56,6 +59,7 @@ class DetailsActivity : AppCompatActivity() {
         }
 
     }
+    //query the progress records from the database and display in the recycleView
     fun displayRecordListFromDB(){
         fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
             .collection(Constants.ACTIVITIES).document(activityName).collection(Constants.RECORDS)
@@ -76,6 +80,7 @@ class DetailsActivity : AppCompatActivity() {
 
     }
 
+    //populate teh record RecycleView with retrieved data from the firestore
     private fun populateRecordsRv (recordList: ArrayList<ActivityRecordClass>) {
         if (recordList.size> 0){
             rv_recordList.layoutManager = LinearLayoutManager(this)
@@ -87,7 +92,7 @@ class DetailsActivity : AppCompatActivity() {
             }
     }
 
-
+    //query the details of the activity clicked from the database
     private fun displayActivityDetailsFromDB (){
         fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
             .collection(Constants.ACTIVITIES).document(activityName).get()
@@ -101,6 +106,7 @@ class DetailsActivity : AppCompatActivity() {
             }
     }
 
+    // Populate the details sections
     @SuppressLint("SetTextI18n")
     fun populateActivityDetails(activity:ActivityClass){
         tv_activityName.text=activity.name
@@ -110,6 +116,7 @@ class DetailsActivity : AppCompatActivity() {
 
     }
 
+    // Delete an activity from the database
     private fun deleteActivity(){
         fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
             .collection(Constants.ACTIVITIES).document(activityName).delete()
@@ -121,6 +128,7 @@ class DetailsActivity : AppCompatActivity() {
             .addOnFailureListener { e -> Log.w("DATA", "Error deleting document", e) }
     }
 
+    //display and confirmation dialog before deleting the activity
     private fun confirmationDialog(){
         val confBuilder = AlertDialog.Builder(this)
         confBuilder.setTitle("Delete Activity?")
@@ -138,6 +146,8 @@ class DetailsActivity : AppCompatActivity() {
         confBuilder.show()
     }
 
+    //Display a custom dialog to let user edit the activity details
+    // the dialog was designed in the dialog_edit_activity.xml
     private fun displayActivityEditDialog(){
         val editDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_edit_activity,null)
         fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
@@ -177,6 +187,7 @@ class DetailsActivity : AppCompatActivity() {
             }
     }
 
+    //display the total time spent in a ctivity
     @SuppressLint("SetTextI18n")
     fun displayProgress(){
         fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
@@ -194,6 +205,7 @@ class DetailsActivity : AppCompatActivity() {
             }
     }
 
+    //format the total progress from seconds to string in hh mm ss format
     private fun formatProgress(progressInSec : Long) : String{
         val hours = progressInSec / 3600
         val minutes = (progressInSec % 3600) / 60

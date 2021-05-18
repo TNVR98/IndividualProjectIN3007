@@ -13,6 +13,10 @@ import kotlinx.android.synthetic.main.activity_add_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Add/Created activity manually was implemnted in this class
+ * the gui design: activity_add_activity.xml
+ */
 class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,7 @@ class AddActivity : AppCompatActivity() {
 
         setupActionBar()
 
+        //store the activity on the firestore
         bt_add.setOnClickListener{
             val activityName = et_activityName.text.toString()
             val description = et_description.text.toString()
@@ -46,7 +51,7 @@ class AddActivity : AppCompatActivity() {
             }
         }
     }
-
+    //Custom app bar
     private fun setupActionBar() {
         setSupportActionBar(toolbar_addActivity)
         val actionBar = supportActionBar

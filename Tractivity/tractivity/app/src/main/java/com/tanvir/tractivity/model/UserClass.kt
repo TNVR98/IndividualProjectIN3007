@@ -2,7 +2,9 @@ package com.tanvir.tractivity.model
 
 import android.os.Parcel
 import android.os.Parcelable
-
+/**
+ * A data class to hold the User details
+ */
 data class UserClass (
     val id: String = "",
     val name : String="",

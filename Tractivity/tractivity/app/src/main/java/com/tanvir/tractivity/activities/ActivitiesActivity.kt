@@ -10,12 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tanvir.tractivity.*
-import com.tanvir.tractivity.ActivityAdapter
+import com.tanvir.tractivity.constants.Constants
+import com.tanvir.tractivity.adapters.ActivityAdapter
 import com.tanvir.tractivity.model.ActivityClass
 import com.tanvir.tractivity.model.FireStoreClass
 import kotlinx.android.synthetic.main.activity_activities.*
 import kotlinx.android.synthetic.main.app_bar2.*
 
+/**
+ * The activity list screen was implemented in this file
+ * the GUI was designed in the activity_activities.xml file
+ * resources used:  https://www.youtube.com/watch?v=6Gm3eMG8KqI
+                    https://www.youtube.com/watch?v=afl_i6uvvU0
+                    https://guides.codepath.com/android/using-the-recyclerview
+ */
 @Suppress("DEPRECATION")
 class ActivitiesActivity : AppCompatActivity() {
     private val firestore = Firebase.firestore
@@ -37,11 +45,10 @@ class ActivitiesActivity : AppCompatActivity() {
             finish()
         }
 
-
     }
 
     // POPULATE RECYCLEVIEW
-    fun populateActivityListRv (activityList: ArrayList<ActivityClass>){
+    private fun populateActivityListRv (activityList: ArrayList<ActivityClass>){
         if (activityList.size> 0){
             rv_activitiesList.layoutManager = LinearLayoutManager(this)
             rv_activitiesList.setHasFixedSize(true)
@@ -62,7 +69,8 @@ class ActivitiesActivity : AppCompatActivity() {
         }
     }
 
-    fun displayActivityListFromDB(){
+    // retrieve the activity details from the firestore and display them
+    private fun displayActivityListFromDB(){
         firestore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
             .collection(Constants.ACTIVITIES)
             .get()
@@ -79,6 +87,5 @@ class ActivitiesActivity : AppCompatActivity() {
             }.addOnFailureListener { exception ->
                 Log.d("DB", "Error getting documents: ", exception)
             }
-
     }
 }

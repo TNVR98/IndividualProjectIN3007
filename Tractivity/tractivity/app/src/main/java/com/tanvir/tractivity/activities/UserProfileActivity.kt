@@ -9,14 +9,17 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.tanvir.tractivity.Constants
 import com.tanvir.tractivity.R
-import com.tanvir.tractivity.model.FireStoreClass
+import com.tanvir.tractivity.constants.Constants
 import com.tanvir.tractivity.model.UserClass
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.dialog_change_pass.*
 import kotlinx.android.synthetic.main.dialog_change_pass.view.*
 
+/**
+ * this class contains teh implementation on the profile screen
+ * the Gui was designed in teh activity_user_profile.xml file
+ */
 class UserProfileActivity : BaseActivity(){
 
      lateinit var gbloggedUser : UserClass
@@ -75,6 +78,8 @@ class UserProfileActivity : BaseActivity(){
 
         }
 
+    //Display a custom dialog designed in dialog_change_pass that allows users to change their password
+    // the new entered password will be update don the authentication server
     private fun changePass(){
         val changePassDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_change_pass,null)
         val changePassDialogBuilder = AlertDialog.Builder(this).setView(changePassDialogView)

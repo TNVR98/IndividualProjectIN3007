@@ -9,6 +9,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.tanvir.tractivity.R
 
+/**
+ * some of the basic functionalities that were used in more than one class were implemented in this class and inherited from.
+ */
 @Suppress("DEPRECATION")
 open class BaseActivity : AppCompatActivity() {
     private var backPressedOnce = false
@@ -17,7 +20,6 @@ open class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_base)
 
     }
-
 
     fun hideStatusBar(){
         window.setFlags(

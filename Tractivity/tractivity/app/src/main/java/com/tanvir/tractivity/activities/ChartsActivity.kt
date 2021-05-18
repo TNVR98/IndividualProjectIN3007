@@ -10,14 +10,17 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import com.tanvir.tractivity.Constants
 import com.tanvir.tractivity.R
+import com.tanvir.tractivity.constants.Constants
 import com.tanvir.tractivity.model.ActivityClass
 import com.tanvir.tractivity.model.ActivityRecordClass
 import com.tanvir.tractivity.model.FireStoreClass
 import kotlinx.android.synthetic.main.activity_charts.*
-import kotlinx.android.synthetic.main.activity_user_profile.*
 
+/**
+ * Displaying PieCharts and bar charts were implemented here
+ * with the GUI implemented in the activity.charts.xml
+ */
 class ChartsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +32,11 @@ class ChartsActivity : AppCompatActivity() {
         )
 
         setupActionBar()
-        showChart()
+        showPieChart()
         showBarChart()
     }
 
+    //query and display activity data in bar chart
     private fun showBarChart(){
         FireStoreClass().fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
             .collection(Constants.ACTIVITIES)
@@ -41,14 +45,15 @@ class ChartsActivity : AppCompatActivity() {
                 Log.d("DB", "All documents received")
 
                 val activityBarEntries = ArrayList<BarEntry>()
-                val activityBarLabel = ArrayList<String>()
+                val activityBarLabels = ArrayList<String>()
                 var index = 0f
                 for (document in documents) {
                     var totalProgress: Long = 0
 
                     val activity = document.toObject(ActivityClass::class.java)
                     FireStoreClass().fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
-                        .collection(Constants.ACTIVITIES).document(activity.name).collection(Constants.RECORDS)
+                        .collection(Constants.ACTIVITIES).document(activity.name).collection(
+                            Constants.RECORDS)
                         .get().addOnSuccessListener { results ->
 
                             for (result in results){
@@ -60,9 +65,9 @@ class ChartsActivity : AppCompatActivity() {
                             if (totalProgress > 0){
 
                                 activityBarEntries.add(BarEntry(index++,totalProgress.toFloat()))
-                                activityBarLabel.add(activity.name)
+                                activityBarLabels.add(activity.name)
                             }
-                            displayBarChart(activityBarEntries,activityBarLabel)
+                            createBarChart(activityBarEntries,activityBarLabels)
                         }.addOnFailureListener { exception ->
                             Log.d("DB", "Error getting records: ", exception)
                         }
@@ -74,7 +79,8 @@ class ChartsActivity : AppCompatActivity() {
             }
     }
 
-    private fun showChart(){
+    //query and display activity data in Pie chart
+    private fun showPieChart(){
 
         FireStoreClass().fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
             .collection(Constants.ACTIVITIES)
@@ -88,7 +94,8 @@ class ChartsActivity : AppCompatActivity() {
                     var totalProgress: Long = 0
                     val activity = document.toObject(ActivityClass::class.java)
                     FireStoreClass().fireStore.collection(Constants.USERS).document(FireStoreClass().getCurrentUserID())
-                        .collection(Constants.ACTIVITIES).document(activity.name).collection(Constants.RECORDS)
+                        .collection(Constants.ACTIVITIES).document(activity.name).collection(
+                            Constants.RECORDS)
                         .get().addOnSuccessListener { results ->
                             for (result in results){
 
@@ -100,7 +107,7 @@ class ChartsActivity : AppCompatActivity() {
                                 activityPieData.add(PieEntry(totalProgress.toFloat(), activity.name))
 
                             }
-                            displayPieChart(activityPieData)
+                            createPieChart(activityPieData)
                         }.addOnFailureListener { exception ->
                             Log.d("DB", "Error getting records: ", exception)
                         }
@@ -112,8 +119,8 @@ class ChartsActivity : AppCompatActivity() {
             }
     }
 
-
-    fun displayBarChart(activityBarEntries: ArrayList<BarEntry>,activityBarLabels : ArrayList<String>){
+    // Populate the Barchart view with defined features
+    private fun createBarChart(activityBarEntries: ArrayList<BarEntry>, activityBarLabels : ArrayList<String>){
         var colors :ArrayList<Int> = ArrayList<Int>()
         for (color in ColorTemplate.JOYFUL_COLORS){
             colors.add(color)
@@ -140,7 +147,8 @@ class ChartsActivity : AppCompatActivity() {
 
     }
 
-    fun displayPieChart(activityData: ArrayList<PieEntry>){
+    // Populate the Pie Chart view with defined features
+    private fun createPieChart(activityData: ArrayList<PieEntry>){
 
         var colors :ArrayList<Int> = ArrayList<Int>()
         for (color in ColorTemplate.JOYFUL_COLORS){
@@ -179,7 +187,7 @@ class ChartsActivity : AppCompatActivity() {
         toolbar_charts.setNavigationOnClickListener{
             onBackPressed() }
     }
-
+    //A class to override the chart value format
     private class ProgressValueFormatter : ValueFormatter(){
         override fun getFormattedValue(value:Float):String {
             return formatProgress(value.toLong())
