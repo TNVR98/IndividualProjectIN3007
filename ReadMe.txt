@@ -1,15 +1,21 @@
-Follow Appendix C on projectReport for better understanding
-The following instruction is required to follow to compile and run the project application:
+Tractivity- My final year project, where I have developed an Android Apllication that aims to improve users' productivity.
+
+The app helps users to track the time spent on different activities, 
+tasks, or ongoing projects by allowing them to log the time spent on those activities and store it 
+on the database, and then presenting the progresses to the users in chart format.
+The full project is reported in "ProjectReport.pdf" file.
+
+
+The following instruction is required to follow to compile and RUN the project application:
+(Follow Appendix C on projectReport for better understanding)
 1.	Install Android Studio from the following URL: https://developer.android.com/studio
-2.	Once installed, launch Android Studio and select the option to ìOpen an existing Android Studio projectî:
- 
+2.	Once installed, launch Android Studio and select the option to ‚ÄúOpen an existing Android Studio project‚Äù:
 3.	Locate the project downloaded, and launch it: 
- 
 4.	Once the project in open, an Android Emulator needs to be installed to run the application:
-ï	If an emulator is already installed, then proceed to stop 5
-ï	In the Toolbar, select the ADV Manager:
+‚Ä¢	If an emulator is already installed, then proceed to stop 5
+‚Ä¢	In the Toolbar, select the ADV Manager:
   
-ï	Click ëCreate Virtual Deviceí and choose a virtual machine from the ëPhoneí category. Author recommends to chose Pixel 3 or Pixel3a as its lightweight.
+‚Ä¢	Click ‚ÄòCreate Virtual Device‚Äô and choose a virtual machine from the ‚ÄòPhone‚Äô category. Author recommends to chose Pixel 3 or Pixel3a as its lightweight.
  
 
 5.	Select the Emulator on the tool bar and click run (Green play button). It might take few moments as the Gradle file will build the application and run on the emulator.   
