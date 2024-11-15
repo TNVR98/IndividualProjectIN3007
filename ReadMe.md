@@ -11,10 +11,10 @@ on the database, and then presenting the progresses to the users in chart format
 The full project is reported in the "ProjectReport.pdf" file.
 
 ## App preview 
-<img src='https://github.com/user-attachments/assets/7c4eca57-9800-4e96-929b-bdeac3886717' alt='' />
-<img src='https://github.com/user-attachments/assets/b8925554-83d1-4d41-9914-e359e6d3a7ed' alt='' />
-<img src='https://github.com/user-attachments/assets/19b531de-5690-4a70-9d85-e7b81d0f377a' alt='' />
-<img src='https://github.com/user-attachments/assets/412cb3a2-ac26-4b60-8e50-1d0060bb8dbf' alt='' />
+<img src='https://github.com/user-attachments/assets/7c4eca57-9800-4e96-929b-bdeac3886717' alt='' width='800'/>
+<img src='https://github.com/user-attachments/assets/b8925554-83d1-4d41-9914-e359e6d3a7ed' alt='' width='800' />
+<img src='https://github.com/user-attachments/assets/19b531de-5690-4a70-9d85-e7b81d0f377a' alt='' width='800' />
+<img src='https://github.com/user-attachments/assets/412cb3a2-ac26-4b60-8e50-1d0060bb8dbf' alt='' width='800'/>
 
 
 ## Instruction to run the project
